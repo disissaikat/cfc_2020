@@ -1,0 +1,47 @@
+<PaymentWindow>
+    ScreenManager:
+        id: actdetwindowmgr
+        Screen:
+            name: "payment_window"
+            MDFloatLayout:
+                MDLabel:
+                    text: "Dummy Payment Page"
+                    font_size: '20sp'
+                    theme_text_color: "Primary"
+                    pos_hint: {'center_x':0.5, 'center_y':0.9}
+                    size_hint: 0.6, 0.1
+                Image:
+                    source: "resources/bank_logo.png"
+                    pos_hint: {'center_x':0.5, 'center_y':0.8}
+                    size_hint_x: None
+                    width: 100
+                    height: 100
+                MDLabel:
+                    id: actname
+                    font_size: '20sp'
+                    theme_text_color: "Primary"
+                    pos_hint: {'center_x':0.5, 'center_y':0.6}
+                    size_hint: 0.6, 0.1
+                MDLabel:
+                    text: "Enter Amount"
+                    font_size: '20sp'
+                    theme_text_color: "Primary"
+                    pos_hint: {'center_x':0.3, 'center_y':0.5}
+                    size_hint: 0.6, 0.1
+                MDTextField:
+                    id: payamount
+                    pos_hint: {'center_x':0.7, 'center_y':0.5}
+                    input_filter: 'int'
+                    width: 20
+                    required: True
+                MDFillRoundFlatButton:
+                    text: "PAY"
+                    pos_hint: {'center_x':0.3, 'center_y':0.2}
+                    on_release:
+                        root.make_payment(payamount)
+                MDRoundFlatButton:
+                    text: "CANCEL"
+                    pos_hint: {'center_x':0.7, 'center_y':0.2}
+                    on_release:
+                        root.cancel_payment()
+                        

@@ -1,0 +1,88 @@
+<ApprovalsWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: approvalwindow
+            Screen:
+                name: "approvals_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "My Approvals"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        id: approval_float_lay
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+
+<SettingsWindow>
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                name: "settings"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Settings"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    FloatLayout:
+                        MDLabel:
+                            text: "Update Email"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.5, 'center_y':0.9}
+                            size_hint: 0.6, 0.1
+                        MDTextField:
+                            id: uname
+                            pos_hint: {'center_x':0.5, 'center_y':0.8}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDLabel:
+                            text: "Update Password"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.5, 'center_y':0.7}
+                            size_hint: 0.6, 0.1
+                        MDTextField:
+                            id: pwd1
+                            password: True
+                            hint_text: "Password"
+                            pos_hint: {'center_x':0.5, 'center_y':0.6}
+                            size_hint_x: None
+                            width: 200
+                            helper_text: "Enter a strong password"
+                            helper_text_mode: "on_focus"
+                        MDTextField:
+                            id: pwd2
+                            password: True
+                            hint_text: "Confirm Password"
+                            pos_hint: {'center_x':0.5, 'center_y':0.5}
+                            size_hint_x: None
+                            width: 200
+                            helper_text: "Passwords should match"
+                            helper_text_mode: "on_focus"
+                        MDRoundFlatIconButton:
+                            text: "Update Image"
+                            icon: "folder"
+                            pos_hint: {'center_x': .5, 'center_y': .3}
+                            on_release: app.file_manager_open()
+                        MDRaisedButton:
+                            text: "Select Theme"
+                            pos_hint: {'center_x': .5, 'center_y': .2}
+                            on_release: app.show_theme_picker()
+                        MDFillRoundFlatButton:
+                            text: "SUBMIT"
+                            pos_hint: {'center_x':0.5, 'center_y':0.1}
+                            on_release:
+                                root.update_settings(uname, pwd1, pwd2)
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer

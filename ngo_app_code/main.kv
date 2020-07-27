@@ -1,0 +1,137 @@
+#:include app.kv
+#:include dummy_payment.kv
+#:include activity.kv
+#:include approval_settings.kv
+
+<Login>:
+    name: "login_window"
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    MDCard:
+        orientation: "vertical"
+        size_hint: [0.9,0.9]
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        FloatLayout:
+            Image:
+                source: "logo.png"
+                pos_hint: {'center_x':0.5, 'center_y':0.8}
+                size_hint_x: None
+                width: 200
+                height: 200
+            MDTextField:
+                id: username
+                hint_text: "Enter User Name"
+                helper_text: "Enter Email"
+                helper_text_mode: "on_error"
+                pos_hint: {'center_x':0.5, 'center_y':0.6}
+                size_hint_x: None
+                width: 250
+                required: True
+                icon_right: "email"
+                icon_right_color: app.theme_cls.primary_color
+
+            MDTextField:
+                id: pwd
+                password: True
+                hint_text: "Enter Password"
+                pos_hint: {'center_x':0.5, 'center_y':0.5}
+                helper_text: "Enter Password"
+                helper_text_mode: "on_error"
+                size_hint_x: None
+                width: 250
+                required: True
+                icon_right: "lock"
+                icon_right_color: app.theme_cls.primary_color
+
+            MDFillRoundFlatButton:
+                text: "LOGIN"
+                pos_hint: {'center_x':0.5, 'center_y':0.4}
+                on_press: 
+                    root.check_login(username, pwd)
+            MDTextButton:
+                text: "New User? Register"
+                pos_hint: {'center_x':0.5, 'center_y':0.3}
+                on_press:
+                    app.root.current = "register_window"
+                    app.root.transition.direction = "left"
+            MDRoundFlatButton:
+                text: "Forgot Password"
+                pos_hint: {'center_x':0.5, 'center_y':0.1}
+                on_press:
+                    root.forgot_password(username)
+
+<Registration>:
+    name: "register_window"
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.jpg'
+    MDCard:
+        orientation: "vertical"
+        size_hint: [0.9,0.9]
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        FloatLayout:
+            Image:
+                source: "logo.png"
+                pos_hint: {'center_x':0.5, 'center_y':0.85}
+                size_hint_x: None
+                width: 100
+                height: 100
+            MDTextField:
+                id: fname
+                hint_text: "First Name"
+                pos_hint: {'center_x':0.5, 'center_y':0.7}
+                size_hint_x: None
+                width: 200
+                required: True
+            MDTextField:
+                id: lname
+                hint_text: "Last Name"
+                pos_hint: {'center_x':0.5, 'center_y':0.6}
+                size_hint_x: None
+                width: 200
+                required: True
+            MDTextField:
+                id: uname
+                hint_text: "Email"
+                pos_hint: {'center_x':0.5, 'center_y':0.5}
+                size_hint_x: None
+                width: 200
+                required: True
+            MDTextField:
+                id: pwd1
+                password: True
+                hint_text: "Password"
+                pos_hint: {'center_x':0.5, 'center_y':0.4}
+                size_hint_x: None
+                width: 200
+                helper_text: "Enter a strong password"
+                helper_text_mode: "on_focus"
+                required: True
+            MDTextField:
+                id: pwd2
+                password: True
+                hint_text: "Confirm Password"
+                pos_hint: {'center_x':0.5, 'center_y':0.3}
+                size_hint_x: None
+                width: 200
+                helper_text: "Passwords should match"
+                helper_text_mode: "on_focus"
+                required: True
+            MDFillRoundFlatButton:
+                text: "REGISTER"
+                pos_hint: {'center_x':0.5, 'center_y':0.2}
+                on_release: 
+                    root.insert_new_user(fname, lname, uname, pwd1, pwd2)
+            MDIconButton:
+                icon: "arrow-left-bold-circle"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                pos_hint: {'center_x':0.5, 'center_y':0.1}
+                on_release:
+                    app.root.current = "login_window"
+                    app.root.transition.direction = "right"

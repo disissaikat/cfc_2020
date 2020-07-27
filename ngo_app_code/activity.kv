@@ -1,0 +1,389 @@
+<ActivityWindow>
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                name: "activity_window"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        id: orgname
+                        # title: "Activities"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    FloatLayout:
+                        ScrollView:
+                            MDList:
+                                id: actscroll
+                                pos_hint: {"x":0.5, "y":0.5}
+                                # TwoLineIconListItem is being created from homepage.py
+                        MDFloatingActionButton:
+                            icon: "plus"
+                            elevation: 20
+                            md_bg_color: app.theme_cls.primary_color
+                            pos_hint: {"x":0.9, "y":0.1}
+                            on_press: 
+                                app.root.current = 'new_activity_window'
+                                app.root.get_screen('new_activity_window').load_nav_drawer()
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<NewActivityWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: newactwindowmgr
+            Screen:
+                name: "new_activity_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "New Activity"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        MDLabel:
+                            text: "Create New Activity"
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.5, 'center_y':0.9}
+                            size_hint: 0.6, 0.1
+                            # size_hint: None, None
+                        MDTextField:
+                            id: actname
+                            hint_text: "Enter Activity Name"
+                            helper_text: "Name is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.7}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDTextField:
+                            id: loc
+                            hint_text: "Select Location"
+                            helper_text: "Location is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.6}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDDropDownItem:
+                            id: drop_item
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                            text: 'Select Disaster'
+                            width: 500
+                            on_release: app.root.get_screen('new_activity_window').menu.open()
+                        MDTextField:
+                            id: target
+                            hint_text: "Enter Target Amount"
+                            helper_text: "Amount is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.4}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                            input_filter: 'int'
+                        MDLabel:
+                            text: "Total Relief Planned"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.5, 'center_y':0.3}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: planned_amount
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.75, 'center_y':0.3}
+                            size_hint: 0.6, 0.1
+                        MDFillRoundFlatButton:
+                            text: "SUBMIT"
+                            pos_hint: {'center_x':0.5, 'center_y':0.2}
+                            on_release:
+                                root.create_activity(actname, loc, drop_item, target)
+                        MDRoundFlatButton:
+                            text: "CANCEL"
+                            pos_hint: {'center_x':0.5, 'center_y':0.1}
+                            on_release:
+                                root.cancel_act_creation()
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+
+<ActivityDetailWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: actdetwindowmgr
+            Screen:
+                name: "activity_detail_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Activity Details"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        MDLabel:
+                            id: actname
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.5, 'center_y':0.9}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            text: "Locations to Serve"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.8}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: location
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.8, 'center_y':0.8}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            text: "Disaster Name:"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.7}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: actdis
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.8, 'center_y':0.7}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            text: "Est. Target Amount:"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.6}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: acttarget
+                            font_size: '20sp'
+                            theme_text_color: "Custom"
+                            text_color: 1,0,0,1
+                            pos_hint: {'center_x':0.8, 'center_y':0.6}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            text: "Help Acquired:"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.5}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: actactual
+                            font_size: '20sp'
+                            theme_text_color: "Custom"
+                            text_color: 0,1,0,1
+                            pos_hint: {'center_x':0.8, 'center_y':0.5}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            text: "Amount Spent:"
+                            font_size: '20sp'
+                            theme_text_color: "Secondary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.4}
+                            size_hint: 0.6, 0.1
+                        MDLabel:
+                            id: amountspent
+                            font_size: '20sp'
+                            theme_text_color: "Custom"
+                            text_color: 0,1,0,1
+                            pos_hint: {'center_x':0.8, 'center_y':0.4}
+                            size_hint: 0.6, 0.1
+                        MDRoundFlatButton:
+                            text: "View Resources"
+                            pos_hint: {'center_x':0.3, 'center_y':0.2}
+                            on_release:
+                                app.root.current = 'resources_window'
+                                app.root.transition.direction = "left"
+                                app.root.get_screen('resources_window').load_resources_page()
+                        MDRoundFlatButton:
+                            text: "View Donations"
+                            pos_hint: {'center_x':0.7, 'center_y':0.2}
+                            on_release:
+                                app.root.current = 'donations_history_window'
+                                app.root.transition.direction = "left"
+                                app.root.get_screen('donations_history_window').load_hist_page()
+                        MDRoundFlatButton:
+                            text: "BACK"
+                            pos_hint: {'center_x':0.5, 'center_y':0.1}
+                            on_release:
+                                app.root.current = 'activity_window'
+                                app.root.transition.direction = "right"
+                        MDFloatingActionButtonSpeedDial:
+                            id: actionbutton
+                            data: {'currency-inr': 'Donate','cart': 'Resources',}
+                            rotation_root_button: True
+                            icon: "plus"
+                            elevation: 20
+                            md_bg_color: app.theme_cls.primary_color
+                            pos_hint: {"x":0.8, "y":0.2}
+                            callback: root.callback
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<MyTransactionWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: mytxnwindow
+            Screen:
+                name: "my_transaction_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "My Donations"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        id: float_lay
+                        MDLabel:
+                            id: nopaymentwarning
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<ResourcesWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: rsrcwindow
+            Screen:
+                name: "resources_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Resources"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        id: float_lay
+                        MDLabel:
+                            id: noresourceswarning
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<ResourcesHistoryWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: rsrchistwindow
+            Screen:
+                name: "resources_history_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Resources History"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        id: float_lay
+                        MDLabel:
+                            id: noresourceswarning
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<DonationsHistoryWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: donhistwindow
+            Screen:
+                name: "donations_history_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Donations History"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        id: float_lay
+                        MDLabel:
+                            id: nodonationswarning
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<AddResourcesWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: addresrcswindowmgr
+            Screen:
+                name: "new_resource_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Add Resource"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        MDLabel:
+                            id: amountspent
+                            font_size: '15sp'
+                            theme_text_color: "Custom"
+                            text_color: 0,1,0,1
+                            pos_hint: {'center_x':0.3, 'center_y':0.9}
+                            size_hint: 0.6, 0.1
+                        MDDropDownItem:
+                            id: name
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+                            text: 'Select Resource'
+                            width: 500
+                            on_release: app.root.get_screen('new_resource_window').rsrcmenu.open()
+                            # required: True
+                        MDTextField:
+                            id: desc
+                            hint_text: "Comments"
+                            pos_hint: {'center_x':0.5, 'center_y':0.8}
+                            size_hint_x: None
+                            width: 200
+                        MDTextField:
+                            id: units
+                            hint_text: "Units Procured"
+                            helper_text: "Units is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.7}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                            input_filter: 'int'
+                        MDTextField:
+                            id: amount
+                            hint_text: "Total Cost"
+                            helper_text: "Cost is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.6}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                            input_filter: 'int'
+                        MDFillRoundFlatButton:
+                            text: "SAVE"
+                            pos_hint: {'center_x':0.5, 'center_y':0.2}
+                            on_release:
+                                root.create_resource(name, desc, units, amount)
+                        MDRoundFlatButton:
+                            text: "CANCEL"
+                            pos_hint: {'center_x':0.5, 'center_y':0.1}
+                            on_release:
+                                root.cancel_resource_creation()
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer

@@ -1,0 +1,10 @@
+var_userid=""
+var_fname=""
+var_lname=""
+var_email=""
+var_org_id=""
+var_org_name=""
+var_act_name=""
+var_act_id=""
+var_bal_amt=0
+var_img_path=""

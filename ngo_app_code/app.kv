@@ -1,0 +1,334 @@
+<ContentNavigationDrawer>:
+    name: "nav_layout"
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+    AnchorLayout:
+        anchor_x: "center"
+        size_hint_y: None
+        height: avatar.height
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "100dp", "100dp"
+            allow_stretch: True
+            keep_ratio: True
+            # source: "logo.png"
+    MDLabel:
+        id: drawer_name
+        font_style: "Button"
+        theme_text_color: "Primary"
+        size_hint_y: None
+        halign: "center"
+        height: self.texture_size[1]
+    MDLabel:
+        id: drawer_email
+        font_style: "Caption"
+        theme_text_color: "Primary"
+        size_hint_y: None
+        halign: "center"
+        height: self.texture_size[1]
+    ScrollView:
+        MDList:
+            OneLineIconListItem:
+                text: "My Groups"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "home_window"
+                    app.root.transition.direction = "right"
+                    app.root.get_screen('home_window').load_home_page()
+                IconLeftWidget:
+                    icon: "account-tie"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+            OneLineIconListItem:
+                text: "All Groups"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "group_window"
+                    app.root.transition.direction = "right"
+                    app.root.get_screen('group_window').load_group_page()
+                IconLeftWidget:
+                    icon: "account-supervisor"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+            OneLineIconListItem:
+                text: "Approvals"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "approvals_window"
+                    app.root.transition.direction = "right"
+                    app.root.get_screen('approvals_window').load_approval_page()
+                IconLeftWidget:
+                    icon: "thumbs-up-down"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+            OneLineIconListItem:
+                text: "Donations"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "my_transaction_window"
+                    app.root.transition.direction = "right"
+                    app.root.get_screen('my_transaction_window').load_txn_page()
+                IconLeftWidget:
+                    icon: "currency-inr"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+            OneLineIconListItem:
+                text: "Settings"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "settings"
+                    app.root.transition.direction = "right"
+                    app.root.get_screen('settings').load_settings_page()
+                IconLeftWidget:
+                    icon: "settings"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+            OneLineIconListItem:
+                text: "Sign Out"
+                theme_text_color: "Custom"
+                text_color: 0,0.5,1,1
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    app.root.current = "login_window"
+                    app.root.transition.direction = "left"
+                    app.root.get_screen('login_window').sign_out()
+                IconLeftWidget:
+                    icon: "logout"
+                    theme_text_color: "Custom"
+                    text_color: 0,0.5,1,1
+
+<HomeWindow>:
+    NavigationLayout:
+        ScreenManager:
+            Screen:  
+                name: "home_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "My Groups"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        MDLabel:
+                            id: nogroupwarning
+                        ScrollView:
+                            MDList:
+                                id: scroll
+                                pos_hint: {"x":0.5, "y":0.5}
+                                # TwoLineAvatarListItem is being created from homepage.py
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<GroupWindow>
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                name: "group_window"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "All Groups"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        ScrollView:
+                            MDList:
+                                id: allorgscroll
+                                pos_hint: {"x":0.5, "y":0.5}
+                                # TwoLineAvatarListItem is being created from homepage.py
+                        MDFloatingActionButton:
+                            icon: "plus"
+                            elevation: 20
+                            md_bg_color: app.theme_cls.primary_color
+                            pos_hint: {"x":0.8, "y":0.2}
+                            on_press: 
+                                app.root.current = 'new_group_window'
+                                app.root.get_screen('new_group_window').load_nav_drawer()
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<NewGroupWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: newgroupwindowmgr
+            Screen:
+                name: "new_group_window"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "New Group"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        MDTextField:
+                            id: groupname
+                            hint_text: "Enter Group Name"
+                            helper_text: "Name is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.9}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDTextField:
+                            id: regnum
+                            hint_text: "Enter Registration Number"
+                            helper_text: "Registration is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.8}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDTextField:
+                            id: desc
+                            hint_text: "Enter Description"
+                            helper_text: "Description is required"
+                            helper_text_mode: "on_error"
+                            pos_hint: {'center_x':0.5, 'center_y':0.7}
+                            size_hint_x: None
+                            width: 200
+                            required: True
+                        MDRoundFlatIconButton:
+                            text: "Upload Logo"
+                            icon: "folder"
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            on_release: app.file_manager_open()
+                        MDFillRoundFlatButton:
+                            text: "SUBMIT"
+                            pos_hint: {'center_x':0.5, 'center_y':0.3}
+                            on_release:
+                                root.create_org(groupname, regnum, desc)
+                        MDRoundFlatButton:
+                            text: "CANCEL"
+                            pos_hint: {'center_x':0.5, 'center_y':0.2}
+                            on_release:
+                                root.cancel_org_creation()
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+
+<JoinGroupWindow>
+    NavigationLayout:
+        ScreenManager:
+            id: newgroupwindowmgr
+            Screen:
+                name: "join_group_window"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Group Details"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDFloatLayout:
+                        Image:
+                            id: grouplogo
+                            pos_hint: {'center_x':0.5, 'center_y':0.85}
+                            size_hint_x: None
+                            width: 200
+                            height: 200
+                        MDLabel:
+                            text: "Group :"
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.7}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            id: gname
+                            font_size: '20sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.6, 'center_y':0.7}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            text: "Registration :"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.6}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            id: greg
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.6, 'center_y':0.6}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            text: "Description :"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.5}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            id: gdesc
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.6, 'center_y':0.5}
+                            size_hint: 0.3, 0.1
+                        MDDropDownItem:
+                            id: activity_item
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                            text: 'Select Activity'
+                            width: 500
+                            on_release: app.root.get_screen('join_group_window').menu.open()
+                        MDLabel:
+                            text: "Target Planned:"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.35}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            id: planned_amount
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.6, 'center_y':0.35}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            text: "Target Reached:"
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.4, 'center_y':0.30}
+                            size_hint: 0.3, 0.1
+                        MDLabel:
+                            id: reached_amount
+                            font_size: '15sp'
+                            theme_text_color: "Primary"
+                            pos_hint: {'center_x':0.6, 'center_y':0.30}
+                            size_hint: 0.3, 0.1
+                        MDFillRoundFlatButton:
+                            text: "DONATE"
+                            pos_hint: {'center_x':0.5, 'center_y':0.2}
+                            on_release:
+                                root.donate_to_activity()
+                        MDFillRoundFlatButton:
+                            text: "JOIN GROUP"
+                            pos_hint: {'center_x':0.35, 'center_y':0.1}
+                            on_release:
+                                root.join_group()
+                        MDRoundFlatButton:
+                            text: "CANCEL"
+                            pos_hint: {'center_x':0.6, 'center_y':0.1}
+                            on_release:
+                                root.cancel_join_group()
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: nav_lay
+                nav_drawer: nav_drawer
+

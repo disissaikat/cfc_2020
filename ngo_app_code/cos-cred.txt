@@ -1,0 +1,9 @@
+{
+  "apikey": "GjxCkQq7wWTASP3KXJ9DlxTzULlfI5CqpOt_IWrjD3yW",
+  "endpoints": "https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints",
+  "iam_apikey_description": "Auto-generated for key 76d16767-f5ab-43dd-8585-ca9d334ecbc8",
+  "iam_apikey_name": "Service credentials-1",
+  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/790e1b084ba44e0b875733b8dec8461b::serviceid:ServiceId-16750b18-f7cc-4fec-96c1-4a4828a9efb4",
+  "resource_instance_id": "crn:v1:bluemix:public:cloud-object-storage:global:a/790e1b084ba44e0b875733b8dec8461b:5a72aa32-71bf-4b8b-8ab7-597ecd9a1597::"
+}
